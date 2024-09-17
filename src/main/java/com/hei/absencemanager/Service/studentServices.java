@@ -9,14 +9,18 @@ import com.hei.absencemanager.Entity.Student;
 import com.hei.absencemanager.Repository.StudentDaoImpl;
 
 @Service
-public class absenceManagerService {
+public class studentServices {
     private StudentDaoImpl studentRepo;
 
-    public absenceManagerService(StudentDaoImpl studentRepo) {
+    public studentServices(StudentDaoImpl studentRepo) {
         this.studentRepo = studentRepo;
     }
 
     public List<Student> getStudentsList() throws SQLException {
         return studentRepo.readStudentList();
+    }
+
+    public Student getOneStudent(String std) throws SQLException {
+        return studentRepo.searchOneStudent(std);
     }
 }
