@@ -431,7 +431,7 @@ VALUES
         'Lewis',
         'J2',
         TRUE
-    ),
+    ),studentService
     (
         'STD20054',
         'hei.hazel.rodriguez@gmail.com',
