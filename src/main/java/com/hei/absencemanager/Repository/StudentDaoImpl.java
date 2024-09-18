@@ -145,4 +145,22 @@ public class StudentDaoImpl implements StudentDao {
         return toUpdate;
     }
 
+    @Override
+    public void deleteByStd(String std) throws SQLException {
+        DatabaseConnection db = new DatabaseConnection();
+        try (Connection connection = db.connect()) {
+            String sql = "DELETE FROM Student WHERE std = ?";
+
+            try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, std);
+
+                int rowsDeleted = pstmt.executeUpdate();
+                if (rowsDeleted == 0) {
+                    throw new SQLException("No student found with ID: " + std);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    };
 }

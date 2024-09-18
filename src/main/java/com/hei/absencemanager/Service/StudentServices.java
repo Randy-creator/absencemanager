@@ -35,4 +35,9 @@ public class StudentServices {
     public Student updateStudent(String std, Student toUpdate) throws SQLException {
         return studentRepo.updateStudentInfo(std, toUpdate);
     }
+
+    public void deleteByStd(String std) throws SQLException {
+        studentRepo.deleteByStd(std);
+        ;
+    }
 }

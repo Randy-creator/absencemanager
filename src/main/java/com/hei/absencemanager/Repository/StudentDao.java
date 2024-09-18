@@ -15,4 +15,6 @@ public interface StudentDao {
     public List<Student> searchStudentName(String toSearch) throws SQLException;
 
     public Student updateStudentInfo(String std, Student toUpdate) throws SQLException;
+
+    public void deleteByStd(String std) throws SQLException;
 }

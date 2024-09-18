@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,10 +43,13 @@ public class StudentController {
         return studentService.findStudents(toSearch);
     }
 
-    
-    @PutMapping("student/{std}")
+    @PutMapping("/student/{std}")
     public Student putMethodName(@PathVariable String std, @RequestBody Student toUpdate) throws SQLException {
         return studentService.updateStudent(std, toUpdate);
     }
 
+    @DeleteMapping("student/{std}")
+    public void deleteByStd(@PathVariable String std) throws SQLException {
+        studentService.deleteByStd(std);
+    }
 }
