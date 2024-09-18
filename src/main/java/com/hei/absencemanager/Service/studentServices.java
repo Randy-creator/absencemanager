@@ -31,4 +31,8 @@ public class studentServices {
     public List<Student> findStudents(String toSearch) throws SQLException {
         return studentRepo.searchStudentName(toSearch);
     }
+
+    public Student updateStudent(String std, Student toUpdate) throws SQLException {
+        return studentRepo.updateStudentInfo(std, toUpdate);
+    }
 }

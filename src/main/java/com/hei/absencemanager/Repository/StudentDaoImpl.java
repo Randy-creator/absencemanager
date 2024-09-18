@@ -75,7 +75,7 @@ public class StudentDaoImpl implements StudentDao {
         DatabaseConnection db = new DatabaseConnection();
         Connection connection = db.connect();
 
-        String sql = "INSERT INTO Student (std, email, firstName, lastName, group, corstatus) VALUES ('"
+        String sql = "INSERT INTO Student (std, email, firstName, lastName, \"group\", corstatus) VALUES ('"
                 + student.getStd() + "', '"
                 + student.getEmail() + "', '"
                 + student.getFirstName() + "', '"
@@ -117,4 +117,26 @@ public class StudentDaoImpl implements StudentDao {
         }
         return student;
     }
+
+    @Override
+    public Student updateStudentInfo(String std, Student toUpdate) throws SQLException {
+        DatabaseConnection db = new DatabaseConnection();
+        Connection connection = db.connect();
+
+        String sql = "UPDATE Student SET " +
+                "email = '" + toUpdate.getEmail() + "', " +
+                "firstName = '" + toUpdate.getFirstName() + "', " +
+                "lastName = '" + toUpdate.getLastName() + "', " +
+                "\"group\" = '" + toUpdate.getGroup() + "', " +
+                "corstatus = " + toUpdate.getCORstatus() +
+                " WHERE std = '" + std + "'";
+
+        try (Statement stm = connection.createStatement()) {
+            stm.executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return toUpdate;
+    }
+
 }

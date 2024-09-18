@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 public class StudentController {
@@ -39,6 +40,11 @@ public class StudentController {
     @GetMapping("/students/name/{toSearch}")
     public List<Student> getMethodName(@PathVariable String toSearch) throws SQLException {
         return studentService.findStudents(toSearch);
+    }
+
+    @PutMapping("student/{std}")
+    public Student putMethodName(@PathVariable String std, @RequestBody Student toUpdate) throws SQLException {
+        return studentService.updateStudent(std, toUpdate);
     }
 
 }
