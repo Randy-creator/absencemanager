@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.hei.absencemanager.Entity.Student;
-import com.hei.absencemanager.Repository.StudentDaoImpl;
+import com.hei.absencemanager.Repository.Student.StudentDaoImpl;
 
 @Service
 public class StudentServices {

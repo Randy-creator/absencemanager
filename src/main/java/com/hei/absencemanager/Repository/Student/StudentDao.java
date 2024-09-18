@@ -1,4 +1,4 @@
-package com.hei.absencemanager.Repository;
+package com.hei.absencemanager.Repository.Student;
 
 import com.hei.absencemanager.Entity.Student;
 

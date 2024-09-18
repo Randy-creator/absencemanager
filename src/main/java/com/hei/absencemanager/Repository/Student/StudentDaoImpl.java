@@ -1,4 +1,4 @@
-package com.hei.absencemanager.Repository;
+package com.hei.absencemanager.Repository.Student;
 
 import java.sql.Statement;
 import java.sql.Connection;
@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hei.absencemanager.Entity.Student;
+import com.hei.absencemanager.Repository.DatabaseConnection;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
