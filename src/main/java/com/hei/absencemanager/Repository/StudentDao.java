@@ -7,5 +7,10 @@ import java.util.List;
 
 public interface StudentDao {
     public List<Student> readStudentList() throws SQLException;
+
     public Student searchOneStudent(String std) throws SQLException;
+
+    public Student createStudent(Student student) throws SQLException;
+
+    public List<Student> searchStudentName(String toSearch) throws SQLException;
 }

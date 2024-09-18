@@ -23,4 +23,12 @@ public class studentServices {
     public Student getOneStudent(String std) throws SQLException {
         return studentRepo.searchOneStudent(std);
     }
+
+    public Student createStudent(Student toCreate) throws SQLException {
+        return studentRepo.createStudent(toCreate);
+    }
+
+    public List<Student> findStudents(String toSearch) throws SQLException {
+        return studentRepo.searchStudentName(toSearch);
+    }
 }

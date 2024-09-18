@@ -9,6 +9,9 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class StudentController {
@@ -27,4 +30,15 @@ public class StudentController {
     public Student getAstudent(@PathVariable String std) throws SQLException {
         return studentService.getOneStudent(std);
     }
+
+    @PostMapping("/student")
+    public Student postMethodName(@RequestBody Student student) throws SQLException {
+        return studentService.createStudent(student);
+    }
+
+    @GetMapping("/students/name/{toSearch}")
+    public List<Student> getMethodName(@PathVariable String toSearch) throws SQLException {
+        return studentService.findStudents(toSearch);
+    }
+
 }

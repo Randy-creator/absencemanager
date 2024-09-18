@@ -70,4 +70,51 @@ public class StudentDaoImpl implements StudentDao {
         return toAdd;
     }
 
+    @Override
+    public Student createStudent(Student student) throws SQLException {
+        DatabaseConnection db = new DatabaseConnection();
+        Connection connection = db.connect();
+
+        String sql = "INSERT INTO Student (std, email, firstName, lastName, group, corstatus) VALUES ('"
+                + student.getStd() + "', '"
+                + student.getEmail() + "', '"
+                + student.getFirstName() + "', '"
+                + student.getLastName() + "', '"
+                + student.getGroup() + "', "
+                + student.getCORstatus() + ")";
+
+        try (Statement stm = connection.createStatement()) {
+            stm.executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return student;
+    }
+
+    @Override
+    public List<Student> searchStudentName(String toSearch) throws SQLException {
+        List<Student> student = new ArrayList<>();
+        DatabaseConnection db = new DatabaseConnection();
+        Connection connection = db.connect();
+
+        try (Statement stm = connection.createStatement()) {
+            String sql = "SELECT * FROM Student WHERE firstName ILIKE '%" + toSearch + "%'";
+            ResultSet rs = stm.executeQuery(sql);
+
+            while (rs.next()) {
+                Student toAdd = new Student(
+                        rs.getString("std"),
+                        rs.getString("email"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("group"),
+                        rs.getBoolean("corstatus"));
+                student.add(toAdd);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return student;
+    }
 }
