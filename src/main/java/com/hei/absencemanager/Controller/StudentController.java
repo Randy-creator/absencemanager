@@ -1,7 +1,7 @@
 package com.hei.absencemanager.Controller;
 
 import com.hei.absencemanager.Entity.Student;
-import com.hei.absencemanager.Service.studentServices;
+import com.hei.absencemanager.Service.StudentServices;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 public class StudentController {
-    private studentServices studentService;
+    private StudentServices studentService;
 
-    public StudentController(studentServices studentService) {
+    public StudentController(StudentServices studentService) {
         this.studentService = studentService;
     }
 
@@ -42,6 +42,7 @@ public class StudentController {
         return studentService.findStudents(toSearch);
     }
 
+    
     @PutMapping("student/{std}")
     public Student putMethodName(@PathVariable String std, @RequestBody Student toUpdate) throws SQLException {
         return studentService.updateStudent(std, toUpdate);

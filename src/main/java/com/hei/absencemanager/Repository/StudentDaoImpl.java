@@ -2,6 +2,7 @@ package com.hei.absencemanager.Repository;
 
 import java.sql.Statement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -121,18 +122,23 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student updateStudentInfo(String std, Student toUpdate) throws SQLException {
         DatabaseConnection db = new DatabaseConnection();
-        Connection connection = db.connect();
+        try (Connection connection = db.connect()) {
+            String sql = "UPDATE Student SET std = ?, email = ?, firstName = ?, lastName = ?, \"group\" = ?, corstatus = ? WHERE std = ?";
 
-        String sql = "UPDATE Student SET " +
-                "email = '" + toUpdate.getEmail() + "', " +
-                "firstName = '" + toUpdate.getFirstName() + "', " +
-                "lastName = '" + toUpdate.getLastName() + "', " +
-                "\"group\" = '" + toUpdate.getGroup() + "', " +
-                "corstatus = " + toUpdate.getCORstatus() +
-                " WHERE std = '" + std + "'";
+            try (PreparedStatement stm = connection.prepareStatement(sql)) {
+                stm.setString(1, toUpdate.getStd());
+                stm.setString(2, toUpdate.getEmail());
+                stm.setString(3, toUpdate.getFirstName());
+                stm.setString(4, toUpdate.getLastName());
+                stm.setString(5, toUpdate.getGroup());
+                stm.setBoolean(6, toUpdate.getCORstatus());
+                stm.setString(7, std);
 
-        try (Statement stm = connection.createStatement()) {
-            stm.executeUpdate(sql);
+                int rowsUpdated = stm.executeUpdate();
+                if (rowsUpdated == 0) {
+                    throw new SQLException("No student found with ID: " + std);
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e);
         }

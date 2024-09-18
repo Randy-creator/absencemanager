@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
   title: Absence Manager
-  description: API for managing student attendance, teachers, and courses.
+  description: API for managing hei's student attendance, teachers, and courses.
   version: 1.0.0
 servers:
   - url: http://localhost:8080
-    description: An app to manage student's absence
+    description: An app to manage student's absence and attendance
 
 tags:
   - name: Students
@@ -39,15 +39,15 @@ paths:
         - Students
       summary: Get a student by STD
       parameters:
-        - name: STD
+        - name: std
           in: path
           required: true
           schema:
             type: string
-          description: The student's STD
+          description: The student's std
       responses:
         "200":
-          description: Returns a student by STD
+          description: Returns a student by std
           content:
             application/json:
               schema:
@@ -80,7 +80,7 @@ paths:
         - Students
       summary: Update a student
       parameters:
-        - name: STD
+        - name: std
           in: path
           required: true
           schema:
@@ -108,7 +108,7 @@ paths:
         - Students
       summary: Delete a student
       parameters:
-        - name: STD
+        - name: std
           in: path
           required: true
           schema:

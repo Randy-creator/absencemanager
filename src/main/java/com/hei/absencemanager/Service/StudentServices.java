@@ -9,10 +9,10 @@ import com.hei.absencemanager.Entity.Student;
 import com.hei.absencemanager.Repository.StudentDaoImpl;
 
 @Service
-public class studentServices {
+public class StudentServices {
     private StudentDaoImpl studentRepo;
 
-    public studentServices(StudentDaoImpl studentRepo) {
+    public StudentServices(StudentDaoImpl studentRepo) {
         this.studentRepo = studentRepo;
     }
 
