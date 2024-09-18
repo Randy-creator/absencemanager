@@ -1,0 +1,308 @@
+openapi: 3.0.0
+info:
+  title: Absence Manager
+  description: API for managing student attendance, teachers, and courses.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: An app to manage student's absence
+
+tags:
+  - name: Students
+    description: student(s) management
+  - name: Teachers
+    description: teacher(s) management
+  - name: Courses
+    description: course(s) management
+
+paths:
+  /students:
+    get:
+      tags:
+        - Students
+      summary: Get all students
+      responses:
+        "200":
+          description: Returns a list of all students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Student"
+        "500":
+          description: Server error
+
+  /students/{STD}:
+    get:
+      tags:
+        - Students
+      summary: Get a student by STD
+      parameters:
+        - name: STD
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The student's STD
+      responses:
+        "200":
+          description: Returns a student by STD
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+        "404":
+          description: Student not found
+        "500":
+          description: Server error
+
+    post:
+      tags:
+        - Students
+      summary: Add a new student
+      requestBody:
+        description: Student object that needs to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Student"
+      responses:
+        "201":
+          description: Student added successfully
+        "400":
+          description: Invalid input
+        "500":
+          description: Server error
+    put:
+      tags:
+        - Students
+      summary: Update a student
+      parameters:
+        - name: STD
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The student's STD
+      requestBody:
+        description: Student object that needs to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Student"
+      responses:
+        "200":
+          description: Student updated successfully
+        "400":
+          description: Invalid input
+        "404":
+          description: Student not found
+        "500":
+          description: Server error
+
+    delete:
+      tags:
+        - Students
+      summary: Delete a student
+      parameters:
+        - name: STD
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The student's STD
+      responses:
+        "204":
+          description: Student deleted successfully
+        "404":
+          description: Student not found
+        "500":
+          description: Server error
+
+  /students/group/{groupName}:
+    get:
+      tags:
+        - Students
+      summary: Get all students in a specific group
+      parameters:
+        - name: groupName
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The group's name
+      responses:
+        "200":
+          description: Returns a list of students in the specified group
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Student"
+        "404":
+          description: No students found for the specified group
+        "500":
+          description: Server error
+
+  /teachers:
+    get:
+      tags:
+        - Teachers 
+      summary: Get all teachers
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter teachers by name
+      responses:
+        "200":
+          description: Returns a list of all teachers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Teacher"
+        "500":
+          description: Server error
+
+    post:
+      tags:
+        - Teachers
+      summary: Add a new teacher
+      requestBody:
+        description: Teacher object that needs to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Teacher"
+      responses:
+        "201":
+          description: Teacher added successfully
+        "400":
+          description: Invalid input
+        "500":
+          description: Server error
+
+  /teachers/{id}:
+    put:
+      tags:
+        - Teachers
+      summary: Modify an existing teacher
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The teacher's ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  description: The teacher's first name
+                lastName:
+                  type: string
+                  description: The teacher's last name
+                sex:
+                  type: string
+                  enum:
+                    - M
+                    - F
+                  description: The teacher's sex
+                email:
+                  type: string
+                  description: The teacher's email
+      responses:
+        "200":
+          description: Teacher modified successfully
+        "400":
+          description: Invalid input
+        "404":
+          description: Teacher not found
+        "500":
+          description: Server error
+
+  /courses:
+    get:
+      tags:
+        - Courses
+      summary: Get all courses
+      responses:
+        "200":
+          description: Returns a list of all courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Course"
+        "500":
+          description: Server error
+
+    post:
+      tags:
+        - Courses
+      summary: Add a new course
+      requestBody:
+        description: Course object that needs to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Course"
+      responses:
+        "201":
+          description: Course added successfully
+        "400":
+          description: Invalid input
+        "500":
+          description: Server error
+
+components:
+  schemas:
+    Student:
+      type: object
+      properties:
+        std:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        group:
+          type: string
+        corstatus:
+          type: boolean
+
+    Teacher:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        teacherRef:
+          type: integer
+
+    Course:
+      type: object
+      properties:
+        courseId:
+          type: integer
+        courseName:
+          type: string
