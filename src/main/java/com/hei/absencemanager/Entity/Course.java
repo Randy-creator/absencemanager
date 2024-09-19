@@ -10,11 +10,9 @@ import java.util.List;
 public class Course {
     private int courseId;
     private String courseName;
-    private List<isAbsent> studentAbsentList;
 
-    public Course(int courseId, String courseName, List<isAbsent> studentAbsentList) {
+    public Course(int courseId, String courseName) {
         this.courseId = courseId;
         this.courseName = courseName;
-        this.studentAbsentList = studentAbsentList;
     }
 }
