@@ -1,0 +1,24 @@
+package com.hei.absencemanager.Service;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.hei.absencemanager.Entity.Attend;
+import com.hei.absencemanager.Repository.AttendanceList.AttendanceListDaoImpl;
+
+@Service
+public class AttendanceListServices {
+    private AttendanceListDaoImpl attendanceListRepo;
+
+    public AttendanceListServices(AttendanceListDaoImpl attendanceListRepo) {
+        this.attendanceListRepo = attendanceListRepo;
+    }
+
+    public List<Attend> readAttendanceList() throws SQLException {
+        return attendanceListRepo.readAttendanceList();
+    }
+}

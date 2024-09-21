@@ -1,5 +1,8 @@
 package com.hei.absencemanager.Entity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,11 +16,14 @@ public class isAbsent {
     // | 2 | 31 |
     // | 3 | 11 |
 
-    private int absenceId;
+    private int attendanceId;
     private boolean isJustified;
+    private LocalDateTime date;
 
-    public isAbsent(int absenceId, boolean isJustified) {
-        this.absenceId = absenceId;
+    public isAbsent(int attendanceId, boolean isJustified, LocalDateTime date) {
+        this.attendanceId = attendanceId;
         this.isJustified = isJustified;
+        this.date = date;
     }
+
 }

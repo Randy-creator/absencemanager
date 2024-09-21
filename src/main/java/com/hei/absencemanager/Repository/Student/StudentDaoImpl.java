@@ -158,7 +158,7 @@ public class StudentDaoImpl implements StudentDao {
 
                 int rowsDeleted = pstmt.executeUpdate();
                 if (rowsDeleted == 0) {
-                    throw new SQLException("No student found with ID: " + std);
+                    throw new SQLException("No student found with STD: " + std);
                 }
             }
         } catch (SQLException e) {

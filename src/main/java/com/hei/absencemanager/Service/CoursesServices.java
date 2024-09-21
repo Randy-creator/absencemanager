@@ -20,7 +20,7 @@ public class CoursesServices {
         return coursesRepo.readCoursesList();
     }
 
-    public Course addCourse(Course toAdd) throws SQLException{
+    public Course addCourse(Course toAdd) throws SQLException {
         return coursesRepo.addCourse(toAdd);
     }
 }

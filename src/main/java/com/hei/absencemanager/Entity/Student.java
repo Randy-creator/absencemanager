@@ -22,7 +22,6 @@ public class Student {
         this.CORstatus = CORstatus;
     }
 
-
     @Override
     public String toString() {
         return "Student{" +

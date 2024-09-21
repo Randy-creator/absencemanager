@@ -3,6 +3,7 @@ package com.hei.absencemanager.Controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,5 +31,4 @@ public class CoursesController {
     public Course addCourse(@RequestBody Course toAdd) throws SQLException {
         return coursesServices.addCourse(toAdd);
     }
-
 }

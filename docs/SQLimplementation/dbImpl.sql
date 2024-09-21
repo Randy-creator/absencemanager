@@ -8,37 +8,42 @@ CREATE TABLE Student (
 );
 
 CREATE TABLE Teacher (
+    teacherRef SERIAL PRIMARY KEY,
     firstName varchar(200),
-    lastName varchar(200),
-    teacherRef int PRIMARY KEY
+    lastName varchar(200)
 );
 
 CREATE TABLE Course (
-    courseId int PRIMARY KEY,
+    courseId SERIAL PRIMARY KEY,
     courseName varchar(150)
 );
 
 CREATE TABLE Attend (
-    attendanceId SERIAL PRIMARY KEY,
+    attendId SERIAL PRIMARY KEY,
     stdRef varchar(8),
-    course_id int,
+    courseId int,
+    date timestamp,
+    presenceStatus char(1) CHECK (presenceStatus IN ('p', 'a', 'q')),
     CONSTRAINT fk_student FOREIGN KEY (stdRef) REFERENCES Student(STD) ON DELETE CASCADE,
-    CONSTRAINT fk_course FOREIGN KEY (course_id) REFERENCES Course(courseId) ON DELETE CASCADE
+    CONSTRAINT fk_course FOREIGN KEY (courseId) REFERENCES Course(courseId) ON DELETE CASCADE
 );
 
 CREATE TABLE isAbsent (
-    absenceId SERIAL PRIMARY KEY,
+    attendanceId SERIAL PRIMARY KEY,
     isJustified boolean,
     stdRef varchar(8),
-    course_id int,
+    courseId int,
+    date timestamp,
+    attendId int,
     CONSTRAINT fk_student FOREIGN KEY (stdRef) REFERENCES Student(STD) ON DELETE CASCADE,
-    CONSTRAINT fk_course FOREIGN KEY (course_id) REFERENCES Course(courseId) ON DELETE CASCADE
+    CONSTRAINT fk_course FOREIGN KEY (courseId) REFERENCES Course(courseId) ON DELETE CASCADE,
+    CONSTRAINT fk_attend FOREIGN KEY (attendId) REFERENCES Attend(attendId) ON DELETE CASCADE -- Foreign key constraint
 );
 
 CREATE TABLE Proof (
     proofId SERIAL PRIMARY KEY,
-    date DATE,
+    date timestamp,
     reason varchar(255),
-    absenceId int,
-    CONSTRAINT fk_absence FOREIGN KEY (absenceId) REFERENCES isAbsent(absenceId) ON DELETE CASCADE
+    attendanceId int,
+    CONSTRAINT fk_attendance FOREIGN KEY (attendanceId) REFERENCES isAbsent(attendanceId) ON DELETE CASCADE
 );

@@ -11,7 +11,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.hei.absencemanager.Entity.Course;
-import com.hei.absencemanager.Entity.Student;
 import com.hei.absencemanager.Repository.DatabaseConnection;
 
 @Repository
