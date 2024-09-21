@@ -33,6 +33,24 @@ paths:
         "500":
           description: Server error
 
+    post:
+      tags:
+        - Students
+      summary: Add a new student
+      requestBody:
+        description: Student object that needs to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Student"
+      responses:
+        "201":
+          description: Student added successfully
+        "400":
+          description: Invalid input
+        "500":
+          description: Server error
   /students/{STD}:
     get:
       tags:
@@ -57,24 +75,6 @@ paths:
         "500":
           description: Server error
 
-    post:
-      tags:
-        - Students
-      summary: Add a new student
-      requestBody:
-        description: Student object that needs to be added
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Student"
-      responses:
-        "201":
-          description: Student added successfully
-        "400":
-          description: Invalid input
-        "500":
-          description: Server error
     put:
       tags:
         - Students
@@ -122,18 +122,18 @@ paths:
         "500":
           description: Server error
 
-  /students/group/{groupName}:
+  /students/name/{toSearch}:
     get:
       tags:
         - Students
-      summary: Get all students in a specific group
+      summary: search the name of a student
       parameters:
-        - name: groupName
+        - name: name
           in: path
           required: true
           schema:
             type: string
-          description: The group's name
+          description: student's name
       responses:
         "200":
           description: Returns a list of students in the specified group
@@ -151,7 +151,7 @@ paths:
   /teachers:
     get:
       tags:
-        - Teachers 
+        - Teachers
       summary: Get all teachers
       parameters:
         - name: name
@@ -216,15 +216,6 @@ paths:
                 lastName:
                   type: string
                   description: The teacher's last name
-                sex:
-                  type: string
-                  enum:
-                    - M
-                    - F
-                  description: The teacher's sex
-                email:
-                  type: string
-                  description: The teacher's email
       responses:
         "200":
           description: Teacher modified successfully

@@ -40,7 +40,7 @@ public class AttendanceListDaoImpl implements AttendanceListDao {
                     "    JOIN Student s ON a.stdRef = s.STD\n" +
                     "    JOIN Course c ON a.courseId = c.courseId;";
             ResultSet rs = stm.executeQuery(sql);
-
+            
             while (rs.next()) {
                 String std = rs.getString("STD");
                 String firstName = rs.getString("firstName");

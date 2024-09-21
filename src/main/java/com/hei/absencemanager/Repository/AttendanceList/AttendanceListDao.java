@@ -9,5 +9,4 @@ import com.hei.absencemanager.Entity.Attend;
 
 public interface AttendanceListDao {
     public List<Attend> readAttendanceList() throws SQLException;
-
 }
