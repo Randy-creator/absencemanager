@@ -1,6 +1,7 @@
 package com.hei.absencemanager.Controller;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -8,7 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hei.absencemanager.Entity.IsAbsent;
 import com.hei.absencemanager.Service.IsAbsentServices;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class isAbsentController {
@@ -21,5 +25,20 @@ public class isAbsentController {
     @GetMapping("absences")
     public List<IsAbsent> readAbsenceList() throws SQLException {
         return isAbsentService.readAbsenceList();
+    }
+
+    @GetMapping("absences/{std}")
+    public List<IsAbsent> readOneStudentsAbsences(@PathVariable String std) throws SQLException {
+        return isAbsentService.readOneStudentsAbsences(std);
+    }
+
+    @PutMapping("absence/{std}")
+    public void updateAbsence(
+            @PathVariable String std,
+            @RequestParam String courseName,
+            @RequestParam LocalDateTime date,
+            @RequestBody IsAbsent toUpdate)
+            throws SQLException {
+        isAbsentService.updateAbsence(std, courseName, date, toUpdate);
     }
 }

@@ -1,6 +1,7 @@
 package com.hei.absencemanager.Service;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -18,5 +19,14 @@ public class IsAbsentServices {
 
     public List<IsAbsent> readAbsenceList() throws SQLException {
         return isAbsentRepo.readAbsenceList();
+    }
+
+    public List<IsAbsent> readOneStudentsAbsences(String std) throws SQLException {
+        return isAbsentRepo.readOneStudentsAbsences(std);
+    }
+
+    public void updateAbsence(String std, String courseName, LocalDateTime date, IsAbsent toUpdate)
+            throws SQLException {
+        isAbsentRepo.updateAbsence(std, courseName, date, toUpdate);
     }
 }
