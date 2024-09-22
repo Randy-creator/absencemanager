@@ -139,4 +139,22 @@ public class AttendanceListDaoImpl implements AttendanceListDao {
         return attendanceList;
     }
 
+    @Override
+    public void deleteAttendance(String stdRef, String courseName, LocalDateTime date) throws SQLException {
+        String sql = "DELETE FROM Attend WHERE stdRef = ? AND courseId = ? AND DATE(date) = DATE(?)";
+
+        try (Connection connection = db.connect();
+                PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, stdRef);
+            ps.setInt(2, getCourseId(courseName));
+            ps.setTimestamp(3, java.sql.Timestamp.valueOf(date));
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("No attendance record found for student " + stdRef + " in course " + courseName
+                        + " on " + date);
+            }
+        }
+    }
+
 }

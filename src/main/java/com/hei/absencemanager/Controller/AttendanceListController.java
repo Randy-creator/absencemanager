@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -41,5 +42,13 @@ public class AttendanceListController {
     @GetMapping("attendance/{stdRef}")
     public List<Attend> getAttendanceByStudent(@PathVariable String stdRef) throws SQLException {
         return attendanceListService.getAttendanceByStudent(stdRef);
+    }
+
+    @DeleteMapping("attendance/{stdRef}")
+    public void deleteAttendance(
+            @PathVariable String stdRef,
+            @RequestParam String courseName,
+            @RequestParam LocalDateTime date) throws SQLException {
+        attendanceListService.deleteAttendance(stdRef, courseName, date);
     }
 }

@@ -29,4 +29,9 @@ public class AttendanceListServices {
     public List<Attend> getAttendanceByStudent(String stdRef) throws SQLException {
         return attendanceListRepo.getAttendanceByStudent(stdRef);
     }
+
+    public void deleteAttendance(String stdRef, String courseName, LocalDateTime date) throws SQLException {
+        attendanceListRepo.deleteAttendance(stdRef, courseName, date);
+    }
+
 }
