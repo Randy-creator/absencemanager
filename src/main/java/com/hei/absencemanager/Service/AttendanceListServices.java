@@ -43,4 +43,11 @@ public class AttendanceListServices {
         return attendanceListRepo.getAttendanceByDateRange(startDate, endDate);
     }
 
+    public List<Attend> getAllAttendanceByCourse(String courseName) throws SQLException {
+        return attendanceListRepo.getAllAttendanceByCourse(courseName);
+    }
+
+    public Attend createAttendance(Attend attend) throws SQLException {
+        return attendanceListRepo.createAttendance(attend);
+    }
 }

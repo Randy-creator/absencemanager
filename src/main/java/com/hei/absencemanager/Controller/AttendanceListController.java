@@ -51,7 +51,7 @@ public class AttendanceListController {
         attendanceListService.deleteAttendance(stdRef, courseName, date);
     }
 
-    @PutMapping("attendace/{stdRef}")
+    @PutMapping("attendance/{stdRef}")
     public void updateAttendance(
             @PathVariable String stdRef,
             @RequestParam String courseName,
@@ -61,10 +61,21 @@ public class AttendanceListController {
         attendanceListService.updateAttendance(stdRef, courseName, date, newStatus);
     }
 
-    @GetMapping("attendance")
+    @GetMapping("attendance/date")
     public List<Attend> getAttendanceByDateRange(
             @RequestParam LocalDateTime startDate,
             @RequestParam LocalDateTime endDate) throws SQLException {
         return attendanceListService.getAttendanceByDateRange(startDate, endDate);
     }
+
+    @GetMapping("attendance/course/{courseName}")
+    public List<Attend> getAllAttendanceByCourse(@PathVariable String courseName) throws SQLException {
+        return attendanceListService.getAllAttendanceByCourse(courseName);
+    }
+
+    @PostMapping("attendance/student")
+    public Attend createAttendance(@RequestBody Attend attend) throws SQLException {
+        return attendanceListService.createAttendance(attend);
+    }
+
 }

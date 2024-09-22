@@ -21,4 +21,7 @@ public interface AttendanceListDao {
 
     public List<Attend> getAttendanceByDateRange(LocalDateTime startDate, LocalDateTime endDate) throws SQLException;
 
+    public List<Attend> getAllAttendanceByCourse(String courseName) throws SQLException;
+
+    public Attend createAttendance(Attend attend) throws SQLException;
 }

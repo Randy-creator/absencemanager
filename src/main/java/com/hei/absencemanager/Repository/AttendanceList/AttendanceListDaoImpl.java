@@ -207,4 +207,51 @@ public class AttendanceListDaoImpl implements AttendanceListDao {
         return attendanceList;
     }
 
+    @Override
+    public List<Attend> getAllAttendanceByCourse(String courseName) throws SQLException {
+        List<Attend> attendanceList = new ArrayList<>();
+        String sql = "SELECT s.STD, s.firstName, s.lastName, c.courseName, a.date, a.presenceStatus " +
+                "FROM Attend a " +
+                "JOIN Student s ON a.stdRef = s.STD " +
+                "JOIN Course c ON a.courseId = c.courseId " +
+                "WHERE c.courseName = ?";
+
+        try (Connection connection = db.connect();
+                PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, courseName);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String std = rs.getString("STD");
+                String firstName = rs.getString("firstName");
+                String lastName = rs.getString("lastName");
+                LocalDateTime attendanceDate = rs.getTimestamp("date").toLocalDateTime();
+                char presenceStatus = rs.getString("presenceStatus").charAt(0);
+
+                Attend toAdd = new Attend(std, firstName, lastName, courseName, attendanceDate, presenceStatus);
+                attendanceList.add(toAdd);
+            }
+        }
+        return attendanceList;
+    }
+
+    @Override
+    public Attend createAttendance(Attend attend) throws SQLException {
+        String sql = "INSERT INTO Attend (stdRef, courseId, date, presenceStatus) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = db.connect();
+                PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, attend.getStd());
+            ps.setInt(2, getCourseId(attend.getCourseName()));
+            ps.setTimestamp(3, java.sql.Timestamp.valueOf(attend.getDate()));
+            ps.setString(4, String.valueOf(attend.getPresenceStatus()));
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Failed to insert attendance record for student " + attend.getStd());
+            }
+        }
+        return attend;
+    }
+
 }
