@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.hei.absencemanager.Entity.AbsenceRequest;
 import com.hei.absencemanager.Entity.Attend;
 import com.hei.absencemanager.Repository.DatabaseConnection;
 
@@ -252,6 +253,30 @@ public class AttendanceListDaoImpl implements AttendanceListDao {
             }
         }
         return attend;
+    }
+
+    @Override
+    public void presentUpdate(AbsenceRequest listOfAbsent, LocalDateTime date, String courseName) throws SQLException {
+        String sql = "UPDATE Attend " +
+                "SET presenceStatus = 'p' " +
+                "WHERE stdRef NOT IN (?) AND courseId = ? AND DATE(date) = DATE(?)";
+
+        try (Connection connection = db.connect();
+                PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            String absentStudentsStr = String.join(",", listOfAbsent.getAbsentStudentsStd());
+
+            ps.setString(1, absentStudentsStr);
+            ps.setInt(2, getCourseId(courseName));
+            ps.setTimestamp(3, java.sql.Timestamp.valueOf(date));
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("No attendance records were updated for course " + courseName + " on " + date);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 
 }

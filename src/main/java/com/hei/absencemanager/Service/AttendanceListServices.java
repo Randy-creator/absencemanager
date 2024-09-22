@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.hei.absencemanager.Entity.AbsenceRequest;
 import com.hei.absencemanager.Entity.Attend;
 import com.hei.absencemanager.Repository.AttendanceList.AttendanceListDaoImpl;
 
@@ -49,5 +50,9 @@ public class AttendanceListServices {
 
     public Attend createAttendance(Attend attend) throws SQLException {
         return attendanceListRepo.createAttendance(attend);
+    }
+
+    public void presentUpdate(AbsenceRequest listOfAbsent, LocalDateTime date, String courseName) throws SQLException {
+        attendanceListRepo.presentUpdate(listOfAbsent, date, courseName);
     }
 }

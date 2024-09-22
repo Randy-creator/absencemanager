@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.hei.absencemanager.Entity.AbsenceRequest;
 import com.hei.absencemanager.Entity.Attend;
 
 public interface AttendanceListDao {
@@ -24,4 +25,6 @@ public interface AttendanceListDao {
     public List<Attend> getAllAttendanceByCourse(String courseName) throws SQLException;
 
     public Attend createAttendance(Attend attend) throws SQLException;
+
+    public void presentUpdate(AbsenceRequest listOfAbsent, LocalDateTime date, String courseName) throws SQLException;
 }

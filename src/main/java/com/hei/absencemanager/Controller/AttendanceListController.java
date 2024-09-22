@@ -2,6 +2,7 @@ package com.hei.absencemanager.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hei.absencemanager.Entity.AbsenceRequest;
 import com.hei.absencemanager.Entity.Attend;
 import com.hei.absencemanager.Service.AttendanceListServices;
 
@@ -78,4 +79,12 @@ public class AttendanceListController {
         return attendanceListService.createAttendance(attend);
     }
 
+    @PostMapping("attendance/presence")
+    public void presenceUpdate(
+            @RequestBody AbsenceRequest listOfAbsent,
+            @RequestParam String courseName,
+            @RequestParam LocalDateTime date) throws SQLException {
+
+        attendanceListService.presentUpdate(listOfAbsent, date, courseName);
+    }
 }
