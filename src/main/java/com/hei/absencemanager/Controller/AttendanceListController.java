@@ -2,7 +2,6 @@ package com.hei.absencemanager.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hei.absencemanager.Entity.AbsenceRequest;
 import com.hei.absencemanager.Entity.Attend;
 import com.hei.absencemanager.Service.AttendanceListServices;
 
@@ -50,5 +49,22 @@ public class AttendanceListController {
             @RequestParam String courseName,
             @RequestParam LocalDateTime date) throws SQLException {
         attendanceListService.deleteAttendance(stdRef, courseName, date);
+    }
+
+    @PutMapping("attendace/{stdRef}")
+    public void updateAttendance(
+            @PathVariable String stdRef,
+            @RequestParam String courseName,
+            @RequestParam LocalDateTime date,
+            @RequestParam char newStatus)
+            throws SQLException {
+        attendanceListService.updateAttendance(stdRef, courseName, date, newStatus);
+    }
+
+    @GetMapping("attendance")
+    public List<Attend> getAttendanceByDateRange(
+            @RequestParam LocalDateTime startDate,
+            @RequestParam LocalDateTime endDate) throws SQLException {
+        return attendanceListService.getAttendanceByDateRange(startDate, endDate);
     }
 }

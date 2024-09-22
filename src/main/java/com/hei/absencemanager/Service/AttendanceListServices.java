@@ -34,4 +34,13 @@ public class AttendanceListServices {
         attendanceListRepo.deleteAttendance(stdRef, courseName, date);
     }
 
+    public void updateAttendance(String stdRef, String courseName, LocalDateTime date, char newStatus)
+            throws SQLException {
+        attendanceListRepo.updateAttendance(stdRef, courseName, date, newStatus);
+    }
+
+    public List<Attend> getAttendanceByDateRange(LocalDateTime startDate, LocalDateTime endDate) throws SQLException {
+        return attendanceListRepo.getAttendanceByDateRange(startDate, endDate);
+    }
+
 }

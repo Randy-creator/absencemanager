@@ -15,4 +15,10 @@ public interface AttendanceListDao {
     public List<Attend> getAttendanceByStudent(String stdRef) throws SQLException;
 
     public void deleteAttendance(String stdRef, String courseName, LocalDateTime date) throws SQLException;
+
+    public void updateAttendance(String stdRef, String courseName, LocalDateTime date, char newStatus)
+            throws SQLException;
+
+    public List<Attend> getAttendanceByDateRange(LocalDateTime startDate, LocalDateTime endDate) throws SQLException;
+
 }
