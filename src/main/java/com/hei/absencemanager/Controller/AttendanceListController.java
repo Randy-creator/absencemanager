@@ -31,4 +31,9 @@ public class AttendanceListController {
         return attendanceListService.readAttendanceList();
     }
 
+    @PostMapping("attendance")
+    public void markAttendance(@RequestBody Attend attend) throws SQLException {
+        attendanceListService.markAttendance(attend);
+    }
+
 }

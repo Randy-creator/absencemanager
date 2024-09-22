@@ -4,7 +4,7 @@ CREATE TABLE Student (
     firstName varchar(200),
     lastName varchar(200),
     "group" varchar(2),
-    CORstatus boolean
+    CORstatus boolean DEFAULT false
 );
 
 CREATE TABLE Teacher (

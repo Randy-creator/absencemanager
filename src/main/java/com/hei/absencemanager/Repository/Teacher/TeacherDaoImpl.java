@@ -50,9 +50,9 @@ public class TeacherDaoImpl implements TeacherDao {
         DatabaseConnection db = new DatabaseConnection();
         Connection connection = db.connect();
 
-        String sql = "INSERT INTO Student (firstName, lastName, teacherRef) VALUES ('"
+        String sql = "INSERT INTO Teacher (firstName, lastName, teacherRef) VALUES ('"
                 + toAdd.getFirstName() + "', '"
-                + toAdd.getLastName() + "', '"
+                + toAdd.getLastName() + "', "
                 + toAdd.getTeacherRef() + ")";
 
         try (Statement stm = connection.createStatement()) {
@@ -72,7 +72,7 @@ public class TeacherDaoImpl implements TeacherDao {
         Teacher toSearch = null;
 
         try (Statement stm = connection.createStatement()) {
-            String sql = "SELECT * FROM Teacher WHERE std ='" + id + "'";
+            String sql = "SELECT * FROM Teacher WHERE teacherRef='" + id + "'";
             ResultSet rs = stm.executeQuery(sql);
 
             if (rs.next()) {
@@ -91,7 +91,7 @@ public class TeacherDaoImpl implements TeacherDao {
     public Teacher updateTeacherInfo(int id, Teacher toUpdate) throws SQLException {
         DatabaseConnection db = new DatabaseConnection();
         try (Connection connection = db.connect()) {
-            String sql = "UPDATE Teacher SET teacherRef= ?, email = ?, firstName = ?, lastName = ? WHERE teacherRef = ?";
+            String sql = "UPDATE Teacher SET teacherRef= ?, firstName = ?, lastName = ? WHERE teacherRef = ?";
 
             try (PreparedStatement stm = connection.prepareStatement(sql)) {
                 stm.setInt(1, toUpdate.getTeacherRef());

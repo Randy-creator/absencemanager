@@ -23,4 +23,16 @@ public class CoursesServices {
     public Course addCourse(Course toAdd) throws SQLException {
         return coursesRepo.addCourse(toAdd);
     }
+
+    public Course searchOneCourse(int id) throws SQLException {
+        return coursesRepo.searchOneCourse(id);
+    }
+
+    public Course updateCourse(int id, Course toUpdate) throws SQLException {
+        return coursesRepo.updateCourse(id, toUpdate);
+    }
+
+    public void deleteById(int id) throws SQLException {
+        coursesRepo.deleteById(id);
+    }
 }

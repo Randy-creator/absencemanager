@@ -40,7 +40,7 @@ public class AttendanceListDaoImpl implements AttendanceListDao {
                     "    JOIN Student s ON a.stdRef = s.STD\n" +
                     "    JOIN Course c ON a.courseId = c.courseId;";
             ResultSet rs = stm.executeQuery(sql);
-            
+
             while (rs.next()) {
                 String std = rs.getString("STD");
                 String firstName = rs.getString("firstName");
@@ -61,4 +61,33 @@ public class AttendanceListDaoImpl implements AttendanceListDao {
         return attendanceList;
     }
 
+    private int getCourseId(String courseName) throws SQLException {
+        String sql = "SELECT courseId FROM Course WHERE courseName = ?";
+
+        try (Connection connection = db.connect();
+                PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, courseName);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("courseId");
+            } else {
+                throw new SQLException("Course not found: " + courseName);
+            }
+        }
+    }
+
+    @Override
+    public void markAttendance(Attend attend) throws SQLException {
+        String sql = "INSERT INTO Attend (stdRef, courseId, date, presenceStatus) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = db.connect();
+                PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, attend.getStd());
+            ps.setInt(2, getCourseId(attend.getCourseName()));
+            ps.setTimestamp(3, java.sql.Timestamp.valueOf(attend.getDate()));
+            ps.setString(4, String.valueOf(attend.getPresenceStatus()));
+            ps.executeUpdate();
+        }
+    }
 }

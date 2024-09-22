@@ -4,8 +4,7 @@ INSERT INTO
         email,
         firstName,
         lastName,
-        "group",
-        CORstatus
+        "group"
     )
 VALUES
     (
@@ -13,158 +12,138 @@ VALUES
         'hei.alice.johnson@gmail.com',
         'Alice',
         'Johnson',
-        'G1',
-        TRUE
+        'G1'
     ),
     (
         'STD20002',
         'hei.bob.smith@gmail.com',
         'Bob',
         'Smith',
-        'J1',
-        FALSE
+        'J1'
     ),
     (
         'STD20003',
         'hei.charlie.williams@gmail.com',
         'Charlie',
         'Williams',
-        'J2',
-        TRUE
+        'J2'
     ),
     (
         'STD20004',
         'hei.diana.brown@gmail.com',
         'Diana',
         'Brown',
-        'H1',
-        FALSE
+        'H1'
     ),
     (
         'STD20005',
         'hei.ethan.jones@gmail.com',
         'Ethan',
         'Jones',
-        'H2',
-        TRUE
+        'H2'
     ),
     (
         'STD20006',
         'hei.fiona.garcia@gmail.com',
         'Fiona',
         'Garcia',
-        'G1',
-        FALSE
+        'G1'
     ),
     (
         'STD20007',
         'hei.george.miller@gmail.com',
         'George',
         'Miller',
-        'J1',
-        TRUE
+        'J1'
     ),
     (
         'STD20008',
         'hei.hannah.davis@gmail.com',
         'Hannah',
         'Davis',
-        'J2',
-        FALSE
+        'J2'
     ),
     (
         'STD20009',
         'hei.isaac.rodriguez@gmail.com',
         'Isaac',
         'Rodriguez',
-        'H1',
-        TRUE
+        'H1'
     ),
     (
         'STD20010',
         'hei.julia.martinez@gmail.com',
         'Julia',
         'Martinez',
-        'H2',
-        FALSE
+        'H2'
     ),
     (
         'STD20011',
         'hei.kevin.hernandez@gmail.com',
         'Kevin',
         'Hernandez',
-        'G1',
-        TRUE
+        'G1'
     ),
     (
         'STD20012',
         'hei.lily.lopez@gmail.com',
         'Lily',
         'Lopez',
-        'J1',
-        FALSE
+        'J1'
     ),
     (
         'STD20013',
         'hei.michael.gonzalez@gmail.com',
         'Michael',
         'Gonzalez',
-        'J2',
-        TRUE
+        'J2'
     ),
     (
         'STD20014',
         'hei.nina.wilson@gmail.com',
         'Nina',
         'Wilson',
-        'H1',
-        FALSE
+        'H1'
     ),
     (
         'STD20015',
         'hei.oscar.anderson@gmail.com',
         'Oscar',
         'Anderson',
-        'H2',
-        TRUE
+        'H2'
     ),
     (
         'STD20016',
         'hei.paula.thomas@gmail.com',
         'Paula',
         'Thomas',
-        'G1',
-        FALSE
+        'G1'
     ),
     (
         'STD20017',
         'hei.quincy.taylor@gmail.com',
         'Quincy',
         'Taylor',
-        'J1',
-        TRUE
+        'J1'
     ),
     (
         'STD20018',
         'hei.rachel.moore@gmail.com',
         'Rachel',
         'Moore',
-        'J2',
-        FALSE
+        'J2'
     ),
     (
         'STD20019',
         'hei.sam.jackson@gmail.com',
         'Sam',
         'Jackson',
-        'H1',
-        TRUE
+        'H1'
     ),
     (
         'STD20020',
         'hei.tina.martin@gmail.com',
         'Tina',
         'Martin',
-        'H2',
-        FALSE
+        'H2'
     );

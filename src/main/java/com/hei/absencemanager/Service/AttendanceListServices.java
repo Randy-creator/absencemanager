@@ -21,4 +21,8 @@ public class AttendanceListServices {
     public List<Attend> readAttendanceList() throws SQLException {
         return attendanceListRepo.readAttendanceList();
     }
+
+    public void markAttendance(Attend attend) throws SQLException {
+        attendanceListRepo.markAttendance(attend);
+    }
 }
