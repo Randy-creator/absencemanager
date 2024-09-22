@@ -22,7 +22,7 @@ public class AttendanceListServices {
         return attendanceListRepo.readAttendanceList();
     }
 
-    public void markAttendance(Attend attend) throws SQLException {
-        attendanceListRepo.markAttendance(attend);
+    public List<Attend> getStudentsByCourseAndDate(String courseName, LocalDateTime date) throws SQLException {
+        return attendanceListRepo.getStudentsByCourseAndDate(courseName, date);
     }
 }

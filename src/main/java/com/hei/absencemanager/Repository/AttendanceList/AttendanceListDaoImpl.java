@@ -78,16 +78,36 @@ public class AttendanceListDaoImpl implements AttendanceListDao {
     }
 
     @Override
-    public void markAttendance(Attend attend) throws SQLException {
-        String sql = "INSERT INTO Attend (stdRef, courseId, date, presenceStatus) VALUES (?, ?, ?, ?)";
+    public List<Attend> getStudentsByCourseAndDate(String courseName, LocalDateTime date) throws SQLException {
+        List<Attend> attendanceList = new ArrayList<>();
+        Connection connection = db.connect();
 
-        try (Connection connection = db.connect();
-                PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, attend.getStd());
-            ps.setInt(2, getCourseId(attend.getCourseName()));
-            ps.setTimestamp(3, java.sql.Timestamp.valueOf(attend.getDate()));
-            ps.setString(4, String.valueOf(attend.getPresenceStatus()));
-            ps.executeUpdate();
+        String sql = "SELECT s.STD, s.firstName, s.lastName, c.courseName, a.date, a.presenceStatus " +
+                "FROM Attend a " +
+                "JOIN Student s ON a.stdRef = s.STD " +
+                "JOIN Course c ON a.courseId = c.courseId " +
+                "WHERE c.courseName = ? AND DATE(a.date) = DATE(?)";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, courseName);
+            ps.setTimestamp(2, java.sql.Timestamp.valueOf(date));
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String std = rs.getString("STD");
+                String firstName = rs.getString("firstName");
+                String lastName = rs.getString("lastName");
+                String course = rs.getString("courseName");
+                LocalDateTime attendanceDate = rs.getTimestamp("date").toLocalDateTime();
+                char presenceStatus = rs.getString("presenceStatus").charAt(0);
+
+                Attend toAdd = new Attend(std, firstName, lastName, course, attendanceDate, presenceStatus);
+                attendanceList.add(toAdd);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
+        return attendanceList;
     }
+
 }

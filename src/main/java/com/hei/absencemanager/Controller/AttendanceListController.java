@@ -31,9 +31,11 @@ public class AttendanceListController {
         return attendanceListService.readAttendanceList();
     }
 
-    @PostMapping("attendance")
-    public void markAttendance(@RequestBody Attend attend) throws SQLException {
-        attendanceListService.markAttendance(attend);
+    @GetMapping("attendance/course")
+    public List<Attend> getStudentsByCourseAndDate(@RequestParam String courseName, @RequestParam String date)
+            throws SQLException {
+        LocalDateTime attendanceDate = LocalDateTime.parse(date);
+        return attendanceListService.getStudentsByCourseAndDate(courseName, attendanceDate);
     }
 
 }

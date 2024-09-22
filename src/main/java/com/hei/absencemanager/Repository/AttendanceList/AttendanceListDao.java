@@ -10,6 +10,5 @@ import com.hei.absencemanager.Entity.Attend;
 public interface AttendanceListDao {
     public List<Attend> readAttendanceList() throws SQLException;
 
-    public void markAttendance(Attend attend) throws SQLException;
-
+    public List<Attend> getStudentsByCourseAndDate(String courseName, LocalDateTime date) throws SQLException;
 }
