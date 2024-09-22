@@ -52,14 +52,14 @@ public class AttendanceListController {
         attendanceListService.deleteAttendance(stdRef, courseName, date);
     }
 
-    @PutMapping("attendance/{stdRef}")
+    @PutMapping("attendance/{stdRefs}")
     public void updateAttendance(
-            @PathVariable String stdRef,
+            @PathVariable String stdRefs,
             @RequestParam String courseName,
             @RequestParam LocalDateTime date,
             @RequestParam char newStatus)
             throws SQLException {
-        attendanceListService.updateAttendance(stdRef, courseName, date, newStatus);
+        attendanceListService.updateAttendance(stdRefs, courseName, date, newStatus);
     }
 
     @GetMapping("attendance/date")

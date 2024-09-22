@@ -14,6 +14,8 @@ tags:
     description: teacher(s) management
   - name: Courses
     description: course(s) management
+  - name: Attendance
+    description: attendance management
 
 paths:
   /students:
@@ -33,6 +35,7 @@ paths:
         "500":
           description: Server error
 
+  /student:
     post:
       tags:
         - Students
@@ -51,7 +54,8 @@ paths:
           description: Invalid input
         "500":
           description: Server error
-  /students/{STD}:
+
+  /students/{std}:
     get:
       tags:
         - Students
@@ -78,14 +82,14 @@ paths:
     put:
       tags:
         - Students
-      summary: Update a student
+      summary: Update a student by STD
       parameters:
         - name: std
           in: path
           required: true
           schema:
             type: string
-          description: The student's STD
+          description: The student's std
       requestBody:
         description: Student object that needs to be updated
         required: true
@@ -106,14 +110,14 @@ paths:
     delete:
       tags:
         - Students
-      summary: Delete a student
+      summary: Delete a student by STD
       parameters:
         - name: std
           in: path
           required: true
           schema:
             type: string
-          description: The student's STD
+          description: The student's std
       responses:
         "204":
           description: Student deleted successfully
@@ -126,17 +130,17 @@ paths:
     get:
       tags:
         - Students
-      summary: search the name of a student
+      summary: Search students by name
       parameters:
-        - name: name
+        - name: toSearch
           in: path
           required: true
           schema:
             type: string
-          description: student's name
+          description: Student's name or part of the name to search
       responses:
         "200":
-          description: Returns a list of students in the specified group
+          description: Returns a list of students matching the search term
           content:
             application/json:
               schema:
@@ -144,7 +148,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/Student"
         "404":
-          description: No students found for the specified group
+          description: No students found matching the name
         "500":
           description: Server error
 
@@ -153,13 +157,6 @@ paths:
       tags:
         - Teachers
       summary: Get all teachers
-      parameters:
-        - name: name
-          in: query
-          required: false
-          schema:
-            type: string
-          description: Filter teachers by name
       responses:
         "200":
           description: Returns a list of all teachers
@@ -191,7 +188,30 @@ paths:
         "500":
           description: Server error
 
-  /teachers/{id}:
+  /teacher/{id}:
+    get:
+      tags:
+        - Teachers
+      summary: Get a teacher by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The teacher's ID
+      responses:
+        "200":
+          description: Returns a teacher by ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Teacher"
+        "404":
+          description: Teacher not found
+        "500":
+          description: Server error
+
     put:
       tags:
         - Teachers
@@ -221,6 +241,25 @@ paths:
           description: Teacher modified successfully
         "400":
           description: Invalid input
+        "404":
+          description: Teacher not found
+        "500":
+          description: Server error
+
+    delete:
+      tags:
+        - Teachers
+      summary: Delete a teacher by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The teacher's ID
+      responses:
+        "204":
+          description: Teacher deleted successfully
         "404":
           description: Teacher not found
         "500":
@@ -262,6 +301,335 @@ paths:
         "500":
           description: Server error
 
+  /course/{id}:
+    get:
+      tags:
+        - Courses
+      summary: Get a course by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The course ID
+      responses:
+        "200":
+          description: Returns a course by ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+        "404":
+          description: Course not found
+        "500":
+          description: Server error
+
+    put:
+      tags:
+        - Courses
+      summary: Update a course by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The course ID
+      requestBody:
+        description: Course object that needs to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Course"
+      responses:
+        "200":
+          description: Course updated successfully
+        "400":
+          description: Invalid input
+        "404":
+          description: Course not found
+        "500":
+          description: Server error
+
+    delete:
+      tags:
+        - Courses
+      summary: Delete a course by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The course ID
+      responses:
+        "204":
+          description: Course deleted successfully
+        "404":
+          description: Course not found
+        "500":
+          description: Server error
+
+  /attendance:
+    get:
+      tags:
+        - Attendance
+      summary: Get the attendance list of all students
+      responses:
+        "200":
+          description: Returns the attendance list of all students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Attend"
+        "500":
+          description: Server error
+
+  /attendance/course:
+    get:
+      tags:
+        - Attendance
+      summary: Get students' attendance by course and date
+      parameters:
+        - name: courseName
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The course name
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: Date of attendance
+      responses:
+        "200":
+          description: Returns a list of students' attendance for the course on the specified date
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Attend"
+        "500":
+          description: Server error
+
+  /attendance/{stdRef}:
+    get:
+      tags:
+        - Attendance
+      summary: Get attendance records of a student
+      parameters:
+        - name: stdRef
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The student's reference
+      responses:
+        "200":
+          description: Returns the attendance records of the student
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Attend"
+        "404":
+          description: Student not found
+        "500":
+          description: Server error
+
+    delete:
+      tags:
+        - Attendance
+      summary: Delete a student's attendance record
+      parameters:
+        - name: stdRef
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The student's reference
+        - name: courseName
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The course name
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: The attendance date
+      responses:
+        "204":
+          description: Attendance record deleted successfully
+        "404":
+          description: Student or record not found
+        "500":
+          description: Server error
+
+  /attendance/{stdRefs}:
+    put:
+      tags:
+        - Attendance
+      summary: Update a student's attendance status
+      parameters:
+        - name: stdRef
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The student's reference
+        - name: courseName
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The course name
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: The attendance date
+        - name: newStatus
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The new attendance status
+      responses:
+        "200":
+          description: Attendance status updated successfully
+        "400":
+          description: Invalid input
+        "404":
+          description: Student or record not found
+        "500":
+          description: Server error
+
+  /attendance/date:
+    get:
+      tags:
+        - Attendance
+      summary: Get attendance records within a date range
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: Start date for the range
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: End date for the range
+      responses:
+        "200":
+          description: Returns the attendance records within the specified date range
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Attend"
+        "500":
+          description: Server error
+
+  /attendance/course/{courseName}:
+    get:
+      tags:
+        - Attendance
+      summary: Get all attendance records for a course
+      parameters:
+        - name: courseName
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The course name
+      responses:
+        "200":
+          description: Returns all attendance records for the specified course
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Attend"
+        "404":
+          description: Course not found
+        "500":
+          description: Server error
+
+  /attendance/student:
+    post:
+      tags:
+        - Attendance
+      summary: Create a new attendance record
+      requestBody:
+        description: Attendance object to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Attend"
+      responses:
+        "201":
+          description: Attendance created successfully
+        "400":
+          description: Invalid input
+        "500":
+          description: Server error
+
+  /attendance/presence:
+    post:
+      tags:
+        - Attendance
+      summary: Update student presence for a course
+      parameters:
+        - name: courseName
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The course name
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: The attendance date
+      requestBody:
+        description: List of absent students
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AbsenceRequest"
+      responses:
+        "200":
+          description: Presence updated successfully
+        "500":
+          description: Server error
+
+  
 components:
   schemas:
     Student:
@@ -297,3 +665,26 @@ components:
           type: integer
         courseName:
           type: string
+
+    Attend:
+      type: object
+      properties:
+        stdRef:
+          type: string
+        courseName:
+          type: string
+        date:
+          type: string
+          format: date-time
+        presenceStatus:
+          type: string
+          description: Attendance status (e.g., present, absent)
+
+    AbsenceRequest:
+      type: object
+      properties:
+        absentStudents:
+          type: array
+          items:
+            type: string
+          description: List of absent students' references
