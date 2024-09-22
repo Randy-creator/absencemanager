@@ -38,4 +38,8 @@ public class AttendanceListController {
         return attendanceListService.getStudentsByCourseAndDate(courseName, attendanceDate);
     }
 
+    @GetMapping("attendance/{stdRef}")
+    public List<Attend> getAttendanceByStudent(@PathVariable String stdRef) throws SQLException {
+        return attendanceListService.getAttendanceByStudent(stdRef);
+    }
 }

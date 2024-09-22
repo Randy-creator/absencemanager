@@ -11,4 +11,6 @@ public interface AttendanceListDao {
     public List<Attend> readAttendanceList() throws SQLException;
 
     public List<Attend> getStudentsByCourseAndDate(String courseName, LocalDateTime date) throws SQLException;
+
+    public List<Attend> getAttendanceByStudent(String stdRef) throws SQLException;
 }

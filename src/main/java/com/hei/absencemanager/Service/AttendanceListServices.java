@@ -25,4 +25,8 @@ public class AttendanceListServices {
     public List<Attend> getStudentsByCourseAndDate(String courseName, LocalDateTime date) throws SQLException {
         return attendanceListRepo.getStudentsByCourseAndDate(courseName, date);
     }
+
+    public List<Attend> getAttendanceByStudent(String stdRef) throws SQLException {
+        return attendanceListRepo.getAttendanceByStudent(stdRef);
+    }
 }
