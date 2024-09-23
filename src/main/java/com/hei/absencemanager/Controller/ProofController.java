@@ -35,4 +35,11 @@ public class ProofController {
         proofService.deleteProofByDetails(std, courseName, date);
     }
 
+    @GetMapping("proofs/{std}")
+    public Proof getOneProof(@PathVariable String std,
+            @RequestParam String courseName,
+            @RequestParam LocalDateTime date) throws SQLException {
+        return proofService.getOneProof(std, courseName, date);
+    }
+
 }

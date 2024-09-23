@@ -84,4 +84,42 @@ public class ProofDaoImpl implements ProofDao {
         }
     }
 
+    @Override
+    public Proof getOneProof(String std, String courseName, LocalDateTime date) throws SQLException {
+        Proof proof = null;
+        String sql = "SELECT " +
+                "Proof.proofId, " +
+                "Student.STD AS std, " +
+                "Course.courseName, " +
+                "Proof.date, " +
+                "Proof.reason " +
+                "FROM Proof " +
+                "JOIN isAbsent ON Proof.attendanceId = isAbsent.attendanceId " +
+                "JOIN Student ON isAbsent.stdRef = Student.STD " +
+                "JOIN Course ON isAbsent.courseId = Course.courseId " +
+                "WHERE Student.STD = ? " +
+                "AND Course.courseName = ? " +
+                "AND Proof.date = ?";
+
+        try (Connection connection = db.connect();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, std);
+            stmt.setString(2, courseName);
+            stmt.setObject(3, date);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                proof = new Proof(
+                        rs.getInt("proofId"),
+                        rs.getString("std"),
+                        rs.getString("courseName"),
+                        rs.getTimestamp("date").toLocalDateTime(),
+                        rs.getString("reason"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return proof;
+    }
+
 }

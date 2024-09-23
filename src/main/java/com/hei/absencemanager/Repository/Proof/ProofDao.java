@@ -11,4 +11,5 @@ public interface ProofDao {
 
     public void deleteProofByDetails(String std, String courseName, LocalDateTime date) throws SQLException;
 
+    public Proof getOneProof(String std, String courseName, LocalDateTime date) throws SQLException;
 }

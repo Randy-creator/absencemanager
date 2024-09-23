@@ -25,4 +25,8 @@ public class IsAbsentServices {
         return isAbsentRepo.readOneStudentsAbsences(std);
     }
 
+    public void updateCORStatusForUnjustifiedAbsences() throws SQLException {
+        isAbsentRepo.updateCORStatusForUnjustifiedAbsences();
+    }
+
 }

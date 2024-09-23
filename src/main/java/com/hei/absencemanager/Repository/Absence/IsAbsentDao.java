@@ -11,4 +11,6 @@ public interface IsAbsentDao {
 
     public List<IsAbsent> readOneStudentsAbsences(String std) throws SQLException;
 
+    public void updateCORStatusForUnjustifiedAbsences() throws SQLException;
+
 }

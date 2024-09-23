@@ -23,7 +23,6 @@ public class Proof {
     }
 
     // INSERT INTO
-
     // Proof (date, reason, attendanceId)
     // SELECT date, 'Medical certificate', attendanceId
     // FROM isAbsent

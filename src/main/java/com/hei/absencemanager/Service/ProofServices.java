@@ -24,4 +24,9 @@ public class ProofServices {
     public void deleteProofByDetails(String std, String courseName, LocalDateTime date) throws SQLException {
         proofRepo.deleteProofByDetails(std, courseName, date);
     }
+
+    public Proof getOneProof(String std, String courseName, LocalDateTime date) throws SQLException {
+        return proofRepo.getOneProof(std, courseName, date);
+    }
+
 }

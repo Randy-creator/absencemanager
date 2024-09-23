@@ -10,9 +10,9 @@ import com.hei.absencemanager.Entity.IsAbsent;
 import com.hei.absencemanager.Service.IsAbsentServices;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 public class isAbsentController {
@@ -30,5 +30,10 @@ public class isAbsentController {
     @GetMapping("absences/{std}")
     public List<IsAbsent> readOneStudentsAbsences(@PathVariable String std) throws SQLException {
         return isAbsentService.readOneStudentsAbsences(std);
+    }
+
+    @PutMapping("absences/update")
+    public void updateCORStatusForUnjustifiedAbsences() throws SQLException {
+        isAbsentService.updateCORStatusForUnjustifiedAbsences();
     }
 }
