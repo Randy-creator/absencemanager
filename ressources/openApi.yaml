@@ -16,6 +16,10 @@ tags:
     description: course(s) management
   - name: Attendance
     description: attendance management
+  - name: Absences
+    description: absence management
+  - name: Proof
+    description: absence proof management
 
 paths:
   /students:
@@ -629,7 +633,149 @@ paths:
         "500":
           description: Server error
 
-  
+  /absences:
+    get:
+      summary: Retrieve all student absences
+      operationId: getAbsences
+      tags:
+        - Absences
+      responses:
+        "200":
+          description: List of student absences
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/IsAbsent"
+        "500":
+          description: Internal server error
+
+  /absences/{std}:
+    get:
+      summary: Retrieve absences for a specific student
+      operationId: getStudentAbsences
+      tags:
+        - Absences
+      parameters:
+        - name: std
+          in: path
+          required: true
+          description: The student's identifier
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of absences for the specified student
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/IsAbsent"
+        "404":
+          description: Student not found
+        "500":
+          description: Internal server error
+
+  /absences/update:
+    put:
+      summary: Update COR status for students with 3 or more unjustified absences
+      operationId: updateCORStatus
+      tags:
+        - Absences
+      responses:
+        "204":
+          description: COR status updated successfully
+        "500":
+          description: Internal server error
+
+
+  /proofs:
+    get:
+      summary: Retrieve a list of proofs
+      operationId: readProofList
+      tags:
+        - Proof
+      responses:
+        '200':
+          description: A list of proofs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Proof'
+
+   
+  /proofs/delete:
+    delete:
+      summary: Delete a proof by details
+      operationId: deleteProofByDetails
+      tags:
+        - Proof
+      parameters:
+        - name: std
+          in: query
+          required: true
+          description: The student ID
+          schema:
+            type: string
+        - name: courseName
+          in: query
+          required: true
+          description: The course name
+          schema:
+            type: string
+        - name: date
+          in: query
+          required: true
+          description: The date of the proof
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '204':
+          description: Proof deleted successfully
+        '404':
+          description: Proof not found
+
+  /proofs/{std}:
+    get:
+      summary: Retrieve a specific proof by student ID, course name, and date
+      operationId: getOneProof
+      tags:
+        - Proof
+      parameters:
+        - name: std
+          in: path
+          required: true
+          description: The student ID
+          schema:
+            type: string
+        - name: courseName
+          in: query
+          required: true
+          description: The course name
+          schema:
+            type: string
+        - name: date
+          in: query
+          required: true
+          description: The date of the proof
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: The requested proof
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proof'
+        '404':
+          description: Proof not found
+
 components:
   schemas:
     Student:
@@ -688,3 +834,56 @@ components:
           items:
             type: string
           description: List of absent students' references
+    IsAbsent:
+      type: object
+      properties:
+        studentId:
+          type: string
+          description: The ID of the student
+        isJustified:
+          type: boolean
+          description: Whether the absence is justified or not
+        absenceDate:
+          type: string
+          format: date-time
+          description: Date and time of the absence
+        proofReason:
+          type: string
+          nullable: true
+          description: Reason for the proof of absence
+        proofDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the proof was provided
+        CORStatus:
+          type: boolean
+          description: COR status of the student
+        courseName:
+          type: string
+          description: Name of the course during which the absence occurred
+      required:
+        - studentId
+        - isJustified
+        - absenceDate
+        - CORStatus
+        - courseName
+    Proof:
+      type: object
+      properties:
+        proofId:
+          type: integer
+          example: 1
+        std:
+          type: string
+          example: "STD123"
+        courseName:
+          type: string
+          example: "Mathematics"
+        date:
+          type: string
+          format: date-time
+          example: "2023-09-23T10:15:30"
+        reason:
+          type: string
+          example: "Sick leave"

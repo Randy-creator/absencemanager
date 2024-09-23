@@ -28,5 +28,4 @@ public class ProofServices {
     public Proof getOneProof(String std, String courseName, LocalDateTime date) throws SQLException {
         return proofRepo.getOneProof(std, courseName, date);
     }
-
 }
