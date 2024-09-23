@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "fb54eb8f-427d-499e-b605-23fc6f0b14ee",
+		"name": "Absence",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37456014"
+	},
+	"item": [
+		{
+			"name": "Get absence list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/absences",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"absences"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a student absence record",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/absences/STD20006",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"absences",
+						"STD20006"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update corstatus",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/absences/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"absences",
+						"update"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
