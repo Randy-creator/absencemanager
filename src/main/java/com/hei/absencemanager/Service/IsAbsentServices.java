@@ -25,8 +25,4 @@ public class IsAbsentServices {
         return isAbsentRepo.readOneStudentsAbsences(std);
     }
 
-    public void updateAbsence(String std, String courseName, LocalDateTime date, IsAbsent toUpdate)
-            throws SQLException {
-        isAbsentRepo.updateAbsence(std, courseName, date, toUpdate);
-    }
 }

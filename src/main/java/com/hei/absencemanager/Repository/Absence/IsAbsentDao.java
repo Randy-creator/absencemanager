@@ -11,6 +11,4 @@ public interface IsAbsentDao {
 
     public List<IsAbsent> readOneStudentsAbsences(String std) throws SQLException;
 
-    public void updateAbsence(String std, String courseName, LocalDateTime date, IsAbsent toUpdate)
-            throws SQLException;
 }

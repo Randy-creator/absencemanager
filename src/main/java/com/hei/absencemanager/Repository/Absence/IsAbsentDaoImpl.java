@@ -103,39 +103,4 @@ public class IsAbsentDaoImpl implements IsAbsentDao {
         return isAbsentList;
     }
 
-    @Override
-    public void updateAbsence(String std, String courseName, LocalDateTime date, IsAbsent toUpdate)
-            throws SQLException {
-        String sql = "UPDATE isAbsent ia " +
-                "JOIN Student s ON ia.stdRef = s.STD " +
-                "JOIN Course c ON ia.courseId = c.courseId " +
-                "SET ia.isJustified = ?, " +
-                "    ia.attendanceId = ?, " +
-                "    ia.date = ?, " +
-                "    s.CORstatus = ? " +
-                "WHERE s.STD = ? AND c.courseName = ? AND ia.date = ?";
-
-        Connection connection = db.connect();
-
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setBoolean(1, toUpdate.isJustified());
-            pstmt.setString(2, toUpdate.getProofReason());
-            pstmt.setTimestamp(3, java.sql.Timestamp.valueOf(toUpdate.getAbsenceDate()));
-            pstmt.setBoolean(4, toUpdate.isCorStatus());
-            pstmt.setString(5, std);
-            pstmt.setString(6, courseName);
-            pstmt.setTimestamp(7, java.sql.Timestamp.valueOf(date));
-
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected == 0) {
-                throw new SQLException("No records updated. Student or absence not found.");
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-            throw e;
-        } finally {
-            connection.close();
-        }
-    }
-
 }

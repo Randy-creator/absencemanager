@@ -31,14 +31,4 @@ public class isAbsentController {
     public List<IsAbsent> readOneStudentsAbsences(@PathVariable String std) throws SQLException {
         return isAbsentService.readOneStudentsAbsences(std);
     }
-
-    @PutMapping("absence/{std}")
-    public void updateAbsence(
-            @PathVariable String std,
-            @RequestParam String courseName,
-            @RequestParam LocalDateTime date,
-            @RequestBody IsAbsent toUpdate)
-            throws SQLException {
-        isAbsentService.updateAbsence(std, courseName, date, toUpdate);
-    }
 }
